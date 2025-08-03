@@ -11,12 +11,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class BookService {
+public class BookServiceImpl {
 
     private final BookRepository bookRepository;
     private final ModelMapper mapper;
 
-    public BookService(BookRepository bookRepository, ModelMapper mapper) {
+    public BookServiceImpl(BookRepository bookRepository, ModelMapper mapper) {
         this.bookRepository = bookRepository;
         this.mapper = mapper;
     }
