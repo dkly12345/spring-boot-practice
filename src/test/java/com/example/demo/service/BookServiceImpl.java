@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class BookServiceImpl {
+public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final ModelMapper mapper;
@@ -21,6 +21,7 @@ public class BookServiceImpl {
         this.mapper = mapper;
     }
 
+    @Override
     public List<BookDto> findAll() {
         return bookRepository.findAll()
                 .stream()
@@ -28,16 +29,19 @@ public class BookServiceImpl {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public Optional<BookDto> findById(Long id) {
         return bookRepository.findById(id)
                 .map(book -> mapper.map(book, BookDto.class));
     }
 
+    @Override
     public BookDto save(BookDto bookDto) {
         Book book = mapper.map(bookDto, Book.class);
         return mapper.map(bookRepository.save(book), BookDto.class);
     }
 
+    @Override
     public Optional<BookDto> update(Long id, BookDto bookDto) {
         return bookRepository.findById(id).map(existing -> {
             existing.setTitle(bookDto.getTitle());
@@ -46,6 +50,7 @@ public class BookServiceImpl {
         });
     }
 
+    @Override
     public boolean delete(Long id) {
         if (!bookRepository.existsById(id)) return false;
         bookRepository.deleteById(id);
